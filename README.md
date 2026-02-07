@@ -20,16 +20,16 @@ A feature-rich 2048 game implementation in C++ for terminal.
 # 3. Build and run (F5)
 
 # Or compile from command line (Developer Command Prompt):
-cl /EHsc /std:c++11 2048.cpp
+cl /EHsc /std:c++11 2048src.cpp
 ```
 
 ### Mac/Linux
 ```bash
 # Compile with g++
-g++ -std=c++11 -O2 2048.cpp -o 2048
+g++ -std=c++11 -O2 2048src.cpp -o 2048src
 
 # Run the game
-./2048
+./2048src
 ```
 Note: The game must be run in a terminal with ANSI color support.
 
