@@ -998,8 +998,8 @@ void Game2048::buildFrameBuffer() {
     for (auto& r : board) for (int num : r) if (num > maxNum) maxNum = num;
     string scoreStr = "当前分数: " + to_string(score);
     string maxNumStr = "当前最大数字: " + (maxNum > 0 ? to_string(maxNum) : "0");
-    int scoreWidth = scoreStr.length() - 4;
-    int maxNumWidth = maxNumStr.length() - 6;
+    int scoreWidth = getChineseAwareWidth(scoreStr);
+    int maxNumWidth = getChineseAwareWidth(maxNumStr);
     int availableWidth = totalWidth - 4;
     int middleSpace = availableWidth - scoreWidth - maxNumWidth;
     if (middleSpace < 0) middleSpace = 0;
@@ -1040,9 +1040,10 @@ void Game2048::buildFrameBuffer() {
             oss << "AI评估: ";
             lock_guard<mutex> lock(aiMutex);
             std::vector<int> percentages = softmaxScoresToPercent(moveScores);
-
+            bool alive = false;
             for (int i = 0; i < 4; i++) {
                 if (moveScores[i] > 0.0f) {
+                    alive = true;
                     if (i == aiBestMove && aiBestMove >= 0) {
                         oss << "\033[1;32m" << moveNames[i];
                     }
@@ -1066,7 +1067,7 @@ void Game2048::buildFrameBuffer() {
                     }
 
                     if (i == aiBestMove && aiBestMove >= 0) {
-                        oss << "\033[1;32m" << movescoreStr << "\033[0m";
+                        oss << movescoreStr << "\033[0m";
                     }
                     else {
                         oss << movescoreStr;
@@ -1075,10 +1076,14 @@ void Game2048::buildFrameBuffer() {
                     if (i < 3) oss << " ";
                 }
             }
+            if (!alive){
+                oss << "\033[1;31m无可行移动\033[0m";
+            }
         }
 
         string aiStr = oss.str();
-        int aiWidth = getChineseAwareWidth(aiStr) - (aiAutoMode ? 29 : (aiEvaluating ? 0 : 18));
+        int aiWidth = getChineseAwareWidth(aiStr) - (aiAutoMode ? 22 : (aiEvaluating ? 0 : 11));
+        
         int aiPadding = (totalWidth - aiWidth) / 2;
         if (aiPadding < 0) aiPadding = 0;
         oss.str("");
@@ -1602,10 +1607,11 @@ void Game2048::play() {
                 }
 
                 if (validMove) {
+                    addRandomTile();
                     if (practiceMode) {
                         savePracticeState();
                     }
-                    addRandomTile();
+
 
                     triggerAIAnalysis();
                     displayBoard();
