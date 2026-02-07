@@ -521,9 +521,170 @@ Game2048::Game2048() :
         {9, {{1,1,1},{1,0,1},{1,1,1},{0,0,1},{1,1,1}}}
     };
 
+    // 初始化语言系统
+    currentLanguage = Language::CHINESE;
+    initLanguageStrings();
+
     initBoard();
     updateTerminalSize();
     resetFrameBuffer();
+}
+
+// 初始化语言字符串
+void Game2048::initLanguageStrings() {
+    // 中文字符串
+    chineseStrings["title"] = "2048";
+    chineseStrings["current_score"] = "当前分数: ";
+    chineseStrings["max_tile"] = "当前最大数字: ";
+    chineseStrings["practice_mode_hint"] = "练习模式: 按Z撤销 | 按K指定生成位置";
+    chineseStrings["ai_auto_mode"] = "(AI自动模式";
+    chineseStrings["running"] = "运行中";
+    chineseStrings["ai_evaluating"] = "AI评估: 计算中...";
+    chineseStrings["ai_eval"] = "AI评估: ";
+    chineseStrings["no_valid_move"] = "无可行移动";
+    chineseStrings["congrats_2048"] = "恭喜！你已经达到 2048！可以继续游戏！";
+    chineseStrings["terminal_too_small"] = "⚠️  终端尺寸不足！最小要求：宽";
+    chineseStrings["resize_terminal"] = "请放大终端窗口后，按任意键重绘...（windows系统可以按ctrl+滚轮缩放终端）";
+    chineseStrings["practice_mode"] = "练习模式";
+    chineseStrings["practice_instructions"] = "请输入一个4x4的局面，每个位置输入0-16的数字：\n"
+                                             "  0表示空位，1表示2，2表示4，...，16表示65536\n"
+                                             "  输入示例：第一行: 0 0 0 0，第二行: 0 2 0 0\n"
+                                             "  输入-1取消并返回原局面";
+    chineseStrings["enter_row"] = "第";
+    chineseStrings["row"] = "行（4个数字，空格分隔）: ";
+    chineseStrings["invalid_input"] = "输入格式错误！";
+    chineseStrings["number_range_error"] = "错误：数字必须在0-16之间！";
+    chineseStrings["empty_board_error"] = "错误：局面不能全为空！";
+    chineseStrings["practice_cancelled"] = "已取消练习模式，返回原局面。";
+    chineseStrings["press_any_key"] = "按任意键继续...";
+    chineseStrings["press_enter"] = "按Enter键继续...";
+    chineseStrings["entered_practice_mode"] = "已进入练习模式！";
+    chineseStrings["practice_commands"] = "  • 按Z键撤销到上一个局面\n"
+                                         "  • 按K键指定下一次生成的数字和位置\n"
+                                         "  • 按R键重新开始游戏将退出练习模式";
+    chineseStrings["enter_spawn_params"] = "请输入强制生成参数（数字 行 列，用空格分隔，按Enter确认）：";
+    chineseStrings["spawn_error_num"] = "输入错误：第一个数必须是2或4！";
+    chineseStrings["spawn_error_pos"] = "输入错误：行和列必须是1-4之间的数字！";
+    chineseStrings["spawn_success"] = "下次将生成";
+    chineseStrings["at_row"] = " 在第";
+    chineseStrings["column"] = "行第";
+    chineseStrings["position"] = "列";
+    chineseStrings["practice_only"] = "仅练习模式可使用此功能！";
+    chineseStrings["game_controls"] = "游戏控制";
+    chineseStrings["move_controls"] = "方向键 (↑ ↓ ← →) 或 WASD 键移动方块";
+    chineseStrings["quit_restart"] = "Q 键 - 退出游戏    R 键 - 重新开始";
+    chineseStrings["save_load"] = "M 键 - 保存游戏    L 键 - 读取存档";
+    chineseStrings["practice_controls"] = "P 键 - 练习模式    Z 键 - 练习模式下撤销    K 键 - 练习模式指定生成位置";
+    chineseStrings["ai_controls"] = "I 键 - 切换AI评估显示    0 键 - 开启/关闭AI自动模式";
+    chineseStrings["save_game"] = "保存游戏";
+    chineseStrings["confirm_save"] = "是否保存当前游戏进度？(y/n): ";
+    chineseStrings["save_cancelled"] = "取消保存操作。";
+    chineseStrings["save_failed"] = "无法创建存档文件！";
+    chineseStrings["save_success"] = "游戏已保存到 2048_save.txt";
+    chineseStrings["load_game"] = "读取存档";
+    chineseStrings["confirm_load"] = "是否读取存档？当前游戏进度将丢失。(y/n): ";
+    chineseStrings["load_cancelled"] = "取消读取操作。";
+    chineseStrings["load_failed"] = "未找到存档文件！";
+    chineseStrings["load_success"] = "游戏已从存档加载！";
+    chineseStrings["game_over"] = "游戏结束！";
+    chineseStrings["final_score"] = "最终分数: ";
+    chineseStrings["high_score"] = "最高分数: ";
+    chineseStrings["congratulations"] = "🎉 恭喜你获胜了！";
+    chineseStrings["no_moves_left"] = "没有可移动的方向了！";
+    chineseStrings["thanks_for_playing"] = "感谢游玩！再见！";
+    chineseStrings["play_again"] = "是否重新开始游戏？(y/n): ";
+    chineseStrings["ai_no_move"] = "AI无有效移动，自动模式已关闭";
+    chineseStrings["move_names_up"] = "上";
+    chineseStrings["move_names_down"] = "下";
+    chineseStrings["move_names_left"] = "左";
+    chineseStrings["move_names_right"] = "右";
+
+    // 英文字符串
+    englishStrings["title"] = "2048";
+    englishStrings["current_score"] = "Current Score: ";
+    englishStrings["max_tile"] = "Max Tile: ";
+    englishStrings["practice_mode_hint"] = "Practice Mode: Z to undo | K to set spawn position";
+    englishStrings["ai_auto_mode"] = "(AI Auto Mode";
+    englishStrings["running"] = " running";
+    englishStrings["ai_evaluating"] = "AI Evaluating: Calculating...";
+    englishStrings["ai_eval"] = "AI Eval: ";
+    englishStrings["no_valid_move"] = "No valid move";
+    englishStrings["congrats_2048"] = "Congratulations! You've reached 2048! You can continue!";
+    englishStrings["terminal_too_small"] = "⚠️  Terminal too small! Minimum required: width ";
+    englishStrings["resize_terminal"] = "Please resize terminal and press any key... (Windows: ctrl+mouse wheel)";
+    englishStrings["practice_mode"] = "Practice Mode";
+    englishStrings["practice_instructions"] = "Enter a 4x4 board state, input 0-16 for each position:\n"
+                                            "  0 for empty, 1 for 2, 2 for 4, ..., 16 for 65536\n"
+                                            "  Example: Row 1: 0 0 0 0, Row 2: 0 2 0 0\n"
+                                            "  Enter -1 to cancel and return to original board";
+    englishStrings["enter_row"] = "Row ";
+    englishStrings["row"] = " (4 numbers, space separated): ";
+    englishStrings["invalid_input"] = "Invalid input format!";
+    englishStrings["number_range_error"] = "Error: Numbers must be between 0-16!";
+    englishStrings["empty_board_error"] = "Error: Board cannot be completely empty!";
+    englishStrings["practice_cancelled"] = "Practice mode cancelled, returning to original board.";
+    englishStrings["press_any_key"] = "Press any key to continue...";
+    englishStrings["entered_practice_mode"] = "Entered Practice Mode!";
+    englishStrings["practice_commands"] = "  • Z key - Undo to previous state\n"
+                                         "  • K key - Set next spawn number and position\n"
+                                         "  • R key - Restart game will exit practice mode";
+    englishStrings["enter_spawn_params"] = "Enter forced spawn parameters (number row column, space separated, press Enter): ";
+    englishStrings["spawn_error_num"] = "Error: First number must be 2 or 4!";
+    englishStrings["spawn_error_pos"] = "Error: Row and column must be numbers 1-4!";
+    englishStrings["spawn_success"] = "Next will spawn ";
+    englishStrings["at_row"] = " at row ";
+    englishStrings["column"] = ", column ";
+    englishStrings["position"] = "";
+    englishStrings["practice_only"] = "This feature is only available in practice mode!";
+    englishStrings["game_controls"] = "Game Controls";
+    englishStrings["move_controls"] = "Arrow keys (↑ ↓ ← →) or WASD to move tiles";
+    englishStrings["quit_restart"] = "Q key - Quit game    R key - Restart";
+    englishStrings["save_load"] = "M key - Save game    L key - Load game";
+    englishStrings["practice_controls"] = "P key - Practice mode    Z key - Undo in practice mode    K key - Set spawn in practice mode";
+    englishStrings["ai_controls"] = "I key - Toggle AI evaluation    0 key - Toggle AI auto mode";
+    englishStrings["save_game"] = "Save Game";
+    englishStrings["confirm_save"] = "Save current game progress? (y/n): ";
+    englishStrings["save_cancelled"] = "Save cancelled.";
+    englishStrings["save_failed"] = "Failed to create save file!";
+    englishStrings["save_success"] = "Game saved to 2048_save.txt";
+    englishStrings["load_game"] = "Load Game";
+    englishStrings["confirm_load"] = "Load saved game? Current progress will be lost. (y/n): ";
+    englishStrings["load_cancelled"] = "Load cancelled.";
+    englishStrings["load_failed"] = "No save file found!";
+    englishStrings["load_success"] = "Game loaded from save file!";
+    englishStrings["game_over"] = "Game Over!";
+    englishStrings["final_score"] = "Final Score: ";
+    englishStrings["high_score"] = "High Score: ";
+    englishStrings["congratulations"] = "🎉 Congratulations! You won!";
+    englishStrings["no_moves_left"] = "No moves available!";
+    englishStrings["thanks_for_playing"] = "Thanks for playing! Goodbye!";
+    englishStrings["play_again"] = "Play again? (y/n): ";
+    englishStrings["ai_no_move"] = "AI has no valid move, auto mode disabled";
+    englishStrings["move_names_up"] = "Up";
+    englishStrings["move_names_down"] = "Down";
+    englishStrings["move_names_left"] = "Left";
+    englishStrings["move_names_right"] = "Right";
+}
+
+// 获取当前语言的字符串
+std::string Game2048::getString(const std::string& key) {
+    if (currentLanguage == Language::CHINESE) {
+        if (chineseStrings.find(key) != chineseStrings.end()) {
+            return chineseStrings[key];
+        }
+    } else {
+        if (englishStrings.find(key) != englishStrings.end()) {
+            return englishStrings[key];
+        }
+    }
+    return "[" + key + "]"; // 如果找不到，返回key名
+}
+
+// 切换语言
+void Game2048::switchLanguage() {
+    currentLanguage = (currentLanguage == Language::CHINESE) ? Language::ENGLISH : Language::CHINESE;
+    resetFrameBuffer();
+    displayBoard();
 }
 
 // 跨平台清屏
@@ -987,7 +1148,7 @@ void Game2048::buildFrameBuffer() {
     oss.str(""); oss << "┌" << makestring(totalWidth - 2, "─") << "┐";
     frameBuffer[lineIdx++] = oss.str();
 
-    string title = "2048";
+    string title = getString("title");
     oss.str("");
     int titlePadding = (totalWidth - 2 - title.length()) / 2;
     oss << "│" << makestring(titlePadding, ' ') << title << makestring(totalWidth - 2 - title.length() - titlePadding, ' ') << "│";
@@ -996,8 +1157,8 @@ void Game2048::buildFrameBuffer() {
     // 绘制分数栏
     int maxNum = 0;
     for (auto& r : board) for (int num : r) if (num > maxNum) maxNum = num;
-    string scoreStr = "当前分数: " + to_string(score);
-    string maxNumStr = "当前最大数字: " + (maxNum > 0 ? to_string(maxNum) : "0");
+    string scoreStr = getString("current_score") + to_string(score);
+    string maxNumStr = getString("max_tile") + (maxNum > 0 ? to_string(maxNum) : "0");
     int scoreWidth = getChineseAwareWidth(scoreStr);
     int maxNumWidth = getChineseAwareWidth(maxNumStr);
     int availableWidth = totalWidth - 4;
@@ -1009,7 +1170,7 @@ void Game2048::buildFrameBuffer() {
     // 练习模式提示
     string practiceHint = "";
     if (practiceMode) {
-        practiceHint = "练习模式: 按Z撤销 | 按K指定生成位置";
+        practiceHint = getString("practice_mode_hint");
     }
     if (!practiceHint.empty()) {
         oss.str("");
@@ -1026,18 +1187,23 @@ void Game2048::buildFrameBuffer() {
     // 显示AI评估信息
     if (openAI) {
         oss.str("");
-        vector<string> moveNames = { "上", "下", "左", "右" };
+        vector<string> moveNames = { 
+            getString("move_names_up"), 
+            getString("move_names_down"), 
+            getString("move_names_left"), 
+            getString("move_names_right") 
+        };
 
         if (aiAutoMode) {
-            oss << "\033[1;32m(AI自动模式";
-            oss << "运行中\033[0m) ";
+            oss << "\033[1;32m" << getString("ai_auto_mode");
+            oss << getString("running") << "\033[0m) ";
         }
 
         if (aiEvaluating && !aiAutoMode) {
-            oss << "AI评估: 计算中...";
+            oss << getString("ai_evaluating");
         }
         else {
-            oss << "AI评估: ";
+            oss << getString("ai_eval");
             lock_guard<mutex> lock(aiMutex);
             std::vector<int> percentages = softmaxScoresToPercent(moveScores);
             bool alive = false;
@@ -1077,7 +1243,7 @@ void Game2048::buildFrameBuffer() {
                 }
             }
             if (!alive){
-                oss << "\033[1;31m无可行移动\033[0m";
+                oss << "\033[1;31m" << getString("no_valid_move") << "\033[0m";
             }
         }
 
@@ -1125,7 +1291,7 @@ void Game2048::buildFrameBuffer() {
 
     // 绘制获胜提示
     if (hasWon() && lineIdx < termHeight) {
-        frameBuffer[lineIdx++] = "\n✨🎉✨ 恭喜！你已经达到 " + to_string(TARGET) + "！可以继续游戏！ ✨🎉✨";
+        frameBuffer[lineIdx++] = "\n✨🎉✨ " + getString("congrats_2048") + " ✨🎉✨";
     }
 
     // 显示强制生成提示
@@ -1139,8 +1305,8 @@ void Game2048::buildFrameBuffer() {
     if (!isTerminalSizeEnough()) {
         frameBuffer.clear();
         frameBuffer.resize(termHeight, "");
-        string warn1 = "\033[31m⚠️  终端尺寸不足！最小要求：宽" + to_string(MIN_TERM_WIDTH) + " 高" + to_string(MIN_TERM_HEIGHT) + " ⚠️\033[0m";
-        string warn2 = "\033[31m请放大终端窗口后，按任意键重绘...（windows系统可以按ctrl+滚轮缩放终端）\033[0m";
+        string warn1 = "\033[31m" + getString("terminal_too_small") + to_string(MIN_TERM_WIDTH) + " " + (currentLanguage == Language::CHINESE ? "高" : "height ") + to_string(MIN_TERM_HEIGHT) + " ⚠️\033[0m";
+        string warn2 = "\033[31m" + getString("resize_terminal") + "\033[0m";
         int warnPad1 = (termWidth - calcDisplayWidth(warn1)) / 2;
         int warnPad2 = (termWidth - calcDisplayWidth(warn2)) / 2;
         if (warnPad1 < 0) warnPad1 = 0;
@@ -1228,24 +1394,21 @@ void Game2048::enterPracticeMode() {
 
     clearScreen();
     cout << "\n══════════════════════════════════════════════════════\n";
-    cout << "                   练习模式                          \n";
+    cout << "                   " << getString("practice_mode") << "                          \n";
     cout << "══════════════════════════════════════════════════════\n\n";
-    cout << "请输入一个4x4的局面，每个位置输入0-16的数字：\n";
-    cout << "  0表示空位，1表示2，2表示4，...，16表示65536\n";
-    cout << "  输入示例：第一行: 0 0 0 0，第二行: 0 2 0 0\n";
-    cout << "  输入-1取消并返回原局面\n\n";
+    cout << getString("practice_instructions") << "\n\n";
 
     vector<vector<int>> newBoard(BOARD_SIZE, vector<int>(BOARD_SIZE, 0));
     int value;
     bool cancel = false;
 
     for (int i = 0; i < BOARD_SIZE; i++) {
-        cout << "第" << (i + 1) << "行（4个数字，空格分隔）: ";
+        cout << getString("enter_row") << (i + 1) << getString("row");
         for (int j = 0; j < BOARD_SIZE; j++) {
             if (!(cin >> value)) {
                 cin.clear();
                 cin.ignore(10000, '\n');
-                cout << "输入格式错误！\n";
+                cout << getString("invalid_input") << "\n";
                 cancel = true;
                 break;
             }
@@ -1256,7 +1419,7 @@ void Game2048::enterPracticeMode() {
             }
 
             if (value < 0 || value > 16) {
-                cout << "错误：数字必须在0-16之间！\n";
+                cout << getString("number_range_error") << "\n";
                 cancel = true;
                 break;
             }
@@ -1286,7 +1449,7 @@ void Game2048::enterPracticeMode() {
         }
 
         if (!hasNonZero) {
-            cout << "\n错误：局面不能全为空！\n";
+            cout << "\n" << getString("empty_board_error") << "\n";
             cancel = true;
         }
     }
@@ -1298,8 +1461,8 @@ void Game2048::enterPracticeMode() {
         forcedSpawnX = savedForcedX;
         forcedSpawnY = savedForcedY;
         spawnHint = savedSpawnHint;
-        cout << "\n已取消练习模式，返回原局面。\n";
-        cout << "\n按任意键继续..." << flush;
+        cout << "\n" << getString("practice_cancelled") << "\n";
+        cout << "\n" << getString("press_any_key") << flush;
     }
     else {
         board = newBoard;
@@ -1315,11 +1478,9 @@ void Game2048::enterPracticeMode() {
         practiceHistory.push_back(board);
         practiceHistoryScores.push_back(score);
 
-        cout << "\n已进入练习模式！\n";
-        cout << "  • 按Z键撤销到上一个局面\n";
-        cout << "  • 按K键指定下一次生成的数字和位置\n";
-        cout << "  • 按R键重新开始游戏将退出练习模式\n";
-        cout << "\n按任意键继续..." << flush;
+        cout << "\n" << getString("entered_practice_mode") << "\n";
+        cout << getString("practice_commands") << "\n";
+        cout << "\n" << getString("press_any_key") << flush;
     }
 
     KeyboardHandler tempKB;
@@ -1334,7 +1495,7 @@ void Game2048::handleForcedSpawnInput() {
 
     int inputRow = termHeight;
     moveCursor(inputRow, 0);
-    cout << "\033[K" << "请输入强制生成参数（数字 行 列，用空格分隔，按Enter确认）：" << flush;
+    cout << "\033[K" << getString("enter_spawn_params") << flush;
 
     KeyboardHandler* kbPtr = reinterpret_cast<KeyboardHandler*>(&keyboard);
     kbPtr->~KeyboardHandler();
@@ -1346,18 +1507,25 @@ void Game2048::handleForcedSpawnInput() {
     bool valid = true;
     if (num != 2 && num != 4) {
         valid = false;
-        spawnHint = "\033[31m输入错误：第一个数必须是2或4！\033[0m";
+        spawnHint = "\033[31m" + getString("spawn_error_num") + "\033[0m";
     }
     else if (x < 1 || x > 4 || y < 1 || y > 4) {
         valid = false;
-        spawnHint = "\033[31m输入错误：行和列必须是1-4之间的数字！\033[0m";
+        spawnHint = "\033[31m" + getString("spawn_error_pos") + "\033[0m";
     }
 
     if (valid) {
         forcedSpawnNum = num;
         forcedSpawnX = x - 1;
         forcedSpawnY = y - 1;
-        spawnHint = "\033[33m下次将生成" + to_string(num) + " 在第" + to_string(x) + "行第" + to_string(y) + "列\033[0m";
+        if (currentLanguage == Language::CHINESE) {
+            spawnHint = "\033[33m" + getString("spawn_success") + to_string(num) + 
+                       getString("at_row") + to_string(x) + getString("column") + to_string(y) + 
+                       getString("position") + "\033[0m";
+        } else {
+            spawnHint = "\033[33m" + getString("spawn_success") + to_string(num) + 
+                       getString("at_row") + to_string(x) + getString("column") + to_string(y) + "\033[0m";
+        }
     }
 
     new (kbPtr) KeyboardHandler();
@@ -1371,29 +1539,34 @@ void Game2048::showhelp() {
     std::ostringstream oss;
     int totalWidth = BOARD_SIZE * CELL_WIDTH + (BOARD_SIZE - 1) + 2;
     oss << "┌" << makestring(totalWidth - 2, "─") << "┐\n";
-    string controlTitle = "游戏控制";
+    string controlTitle = getString("game_controls");
     int controlTitleWidth = getChineseAwareWidth(controlTitle);
     int controlTitlePadding = (totalWidth - 2 - controlTitleWidth) / 2;
     oss << "│" << makestring(controlTitlePadding, ' ') << controlTitle << makestring(totalWidth - 2 - controlTitleWidth - controlTitlePadding, ' ') << "│\n";
     oss << "├" << makestring(totalWidth - 2, "─") << "┤\n";
-    string moveStr = "方向键 (↑ ↓ ← →) 或 WASD 键移动方块";
-    string controlStr = "Q 键 - 退出游戏    R 键 - 重新开始";
-    string saveLoadStr = "M 键 - 保存游戏    L 键 - 读取存档";
-    string practiceStr = "P 键 - 练习模式    Z 键 - 练习模式下撤销    K 键 - 练习模式指定生成位置";
-    string aiStr = "I 键 - 切换AI评估显示    0 键 - 开启/关闭AI自动模式";
 
+    string languageStr = "E键 - 切换语言     E key - switch language";
+    string moveStr = getString("move_controls");
+    string controlStr = getString("quit_restart");
+    string saveLoadStr = getString("save_load");
+    string practiceStr = getString("practice_controls");
+    string aiStr = getString("ai_controls");
+
+    int languageWidth = getChineseAwareWidth(languageStr);
     int moveWidth = getChineseAwareWidth(moveStr);
     int controlWidth = getChineseAwareWidth(controlStr);
     int saveLoadWidth = getChineseAwareWidth(saveLoadStr);
     int practiceWidth = getChineseAwareWidth(practiceStr);
     int aiWidth = getChineseAwareWidth(aiStr);
 
+    int languagePadding = (totalWidth - 2 - languageWidth) / 2;
     int movePadding = (totalWidth - 2 - moveWidth) / 2;
     int controlPadding = (totalWidth - 2 - controlWidth) / 2;
     int saveLoadPadding = (totalWidth - 2 - saveLoadWidth) / 2;
     int practicePadding = (totalWidth - 2 - practiceWidth) / 2;
     int aiPadding = (totalWidth - 2 - aiWidth) / 2;
 
+    oss << "│" << makestring(languagePadding, ' ') << languageStr << makestring(totalWidth - 2 - languageWidth - languagePadding, ' ') << "│\n";
     oss << "│" << makestring(movePadding, ' ') << moveStr << makestring(totalWidth - 2 - moveWidth - movePadding, ' ') << "│\n";
     oss << "│" << makestring(controlPadding, ' ') << controlStr << makestring(totalWidth - 2 - controlWidth - controlPadding, ' ') << "│\n";
     oss << "│" << makestring(saveLoadPadding, ' ') << saveLoadStr << makestring(totalWidth - 2 - saveLoadWidth - saveLoadPadding, ' ') << "│\n";
@@ -1401,7 +1574,7 @@ void Game2048::showhelp() {
     oss << "│" << makestring(aiPadding, ' ') << aiStr << makestring(totalWidth - 2 - aiWidth - aiPadding, ' ') << "│\n";
     oss << "└" << makestring(totalWidth - 2, "─") << "┘\n\n";
     cout << oss.str() << flush;
-    cout << "按Enter键继续...\n" << flush;
+    cout << getString("press_enter") << "\n" << flush;
     resetFrameBuffer();
 }
 
@@ -1409,14 +1582,14 @@ void Game2048::showhelp() {
 bool Game2048::saveGame() {
     clearScreen();
     cout << "\n══════════════════════════════════════════════════════\n";
-    cout << "                   保存游戏                          \n";
+    cout << "                   " << getString("save_game") << "                          \n";
     cout << "══════════════════════════════════════════════════════\n\n";
-    cout << "是否保存当前游戏进度？(y/n): ";
+    cout << getString("confirm_save");
     char confirm;
     cin >> confirm;
     cin.ignore();
     if (tolower(confirm) != 'y') {
-        cout << "取消保存操作。\n";
+        cout << getString("save_cancelled") << "\n";
 #ifdef _WIN32
         Sleep(1000);
 #else
@@ -1427,7 +1600,7 @@ bool Game2048::saveGame() {
     }
     ofstream saveFile("2048_save.txt");
     if (!saveFile) {
-        cout << "无法创建存档文件！\n";
+        cout << getString("save_failed") << "\n";
 #ifdef _WIN32
         Sleep(2000);
 #else
@@ -1445,7 +1618,7 @@ bool Game2048::saveGame() {
         saveFile << "\n";
     }
     saveFile.close();
-    cout << "游戏已保存到 2048_save.txt\n";
+    cout << getString("save_success") << "\n";
 #ifdef _WIN32
     Sleep(2000);
 #else
@@ -1459,14 +1632,14 @@ bool Game2048::saveGame() {
 bool Game2048::loadGame() {
     clearScreen();
     cout << "\n══════════════════════════════════════════════════════\n";
-    cout << "                   读取存档                          \n";
+    cout << "                   " << getString("load_game") << "                          \n";
     cout << "══════════════════════════════════════════════════════\n\n";
-    cout << "是否读取存档？当前游戏进度将丢失。(y/n): ";
+    cout << getString("confirm_load");
     char confirm;
     cin >> confirm;
     cin.ignore();
     if (tolower(confirm) != 'y') {
-        cout << "取消读取操作。\n";
+        cout << getString("load_cancelled") << "\n";
 #ifdef _WIN32
         Sleep(1000);
 #else
@@ -1477,7 +1650,7 @@ bool Game2048::loadGame() {
     }
     ifstream saveFile("2048_save.txt");
     if (!saveFile) {
-        cout << "未找到存档文件！\n";
+        cout << getString("load_failed") << "\n";
 #ifdef _WIN32
         Sleep(2000);
 #else
@@ -1502,7 +1675,7 @@ bool Game2048::loadGame() {
     }
     saveFile.close();
     if (!valid) {
-        cout << "存档文件已损坏！\n";
+        cout << getString("load_failed") << "\n";
 #ifdef _WIN32
         Sleep(2000);
 #else
@@ -1529,7 +1702,7 @@ bool Game2048::loadGame() {
     aiBestMove = -1;
 
     resetFrameBuffer();
-    cout << "游戏已从存档加载！\n";
+    cout << getString("load_success") << "\n";
     triggerAIAnalysis();
 #ifdef _WIN32
     Sleep(2000);
@@ -1581,7 +1754,7 @@ void Game2048::play() {
                     continue;
                 case 'q':
                     clearScreen();
-                    cout << "\n游戏结束！最终分数: " << score << endl << flush;
+                    cout << "\n" << getString("game_over") << getString("final_score") << score << endl << flush;
                     return;
                 default:
                     if (input == 'w' || input == 'a' || input == 's' || input == 'd' ||
@@ -1601,7 +1774,7 @@ void Game2048::play() {
                 default:
                     aiAutoMode = false;
                     moveCursor(termHeight - 2, 0);
-                    cout << "\033[31mAI无有效移动，自动模式已关闭\033[0m" << flush;
+                    cout << "\033[31m" << getString("ai_no_move") << "\033[0m" << flush;
                     displayBoard();
                     continue;
                 }
@@ -1684,7 +1857,7 @@ void Game2048::play() {
             case 'd': validMove = moveRight(); break;
             case 'q':
                 clearScreen();
-                cout << "\n游戏结束！最终分数: " << score << endl << flush;
+                cout << "\n" << getString("game_over") << getString("final_score") << score << endl << flush;
                 return;
             case 'r':
                 restartGame();
@@ -1745,7 +1918,7 @@ void Game2048::play() {
                 }
                 else {
                     moveCursor(termHeight - 1, 0);
-                    cout << "\033[31m仅练习模式可使用此功能！\033[0m" << flush;
+                    cout << "\033[31m" << getString("practice_only") << "\033[0m" << flush;
 #ifdef _WIN32
                     Sleep(1000);
 #else
@@ -1767,6 +1940,9 @@ void Game2048::play() {
                     }
                 }
                 displayBoard();
+                continue;
+            case 'e':
+                switchLanguage();
                 continue;
             default: continue;
             }
@@ -1797,11 +1973,11 @@ void Game2048::play() {
 
     moveCursor(termHeight, 0);
     cout << "\n══════════════════════════════════════════════════════\n";
-    cout << "                   游戏结束！                         \n";
-    cout << "                   最终分数: " << score << "          \n";
-    cout << "                   最高分数: " << highScore << "      \n";
-    if (won) cout << "              🎉 恭喜你获胜了！                    \n";
-    else cout << "              没有可移动的方向了！                 \n";
+    cout << "                   " << getString("game_over") << "                         \n";
+    cout << "                   " << getString("final_score") << score << "          \n";
+    cout << "                   " << getString("high_score") << highScore << "      \n";
+    if (won) cout << "              " << getString("congratulations") << "                    \n";
+    else cout << "              " << getString("no_moves_left") << "                 \n";
     cout << "══════════════════════════════════════════════════════\n";
 }
 
@@ -1847,13 +2023,12 @@ int main() {
         SetConsoleCursorInfo(hOut, &cursorInfo);
 #endif
 
-        cout << "\n是否重新开始游戏？(y/n): ";
+        cout << "\n" << game.getString("play_again");
         char playAgain;
         cin >> playAgain;
         cin.ignore();
         if (tolower(playAgain) != 'y') exitGame = true;
     }
 
-    cout << "\033[0m\n感谢游玩！再见！\n" << flush;
     return 0;
 }

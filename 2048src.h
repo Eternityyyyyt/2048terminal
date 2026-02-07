@@ -49,6 +49,12 @@ extern bool DEBUG;
 extern std::map<int, int> _2PowerMap;
 extern std::map<int, int> _2logMap;
 
+// 语言枚举
+enum class Language {
+    ENGLISH,
+    CHINESE
+};
+
 // 辅助函数声明
 size_t skipAnsiCode(const string& s, size_t pos);
 int calcDisplayWidth(const string& s);
@@ -187,6 +193,10 @@ private:
     const int MIN_TERM_WIDTH;
     const int MIN_TERM_HEIGHT;
 
+    //语言相关变量
+    Language currentLanguage;
+    map<string, string> chineseStrings, englishStrings;
+
     // AI相关变量
     AIEvaluator aiEvaluator;
     vector<float> moveScores;
@@ -216,7 +226,12 @@ public:
     int getScore() const { return score; }
     int getHighScore() const { return highScore; }
 
+    std::string getString(const std::string& key);
 private:
+    // 语言相关函数
+    void switchLanguage();
+    void initLanguageStrings();
+
     // 游戏逻辑函数
     void initBoard();
     void addRandomTile();
