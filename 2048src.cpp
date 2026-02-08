@@ -6,7 +6,7 @@ const int BOARD_SIZE = 4;
 const int TARGET = 2048;
 const int CELL_WIDTH = 26;
 const int CELL_HEIGHT = 13;
-bool DEBUG = true;
+bool DEBUG = false;
 
 // 全局映射表定义
 std::map<int, int> _2PowerMap = {
