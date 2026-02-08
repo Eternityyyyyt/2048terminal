@@ -6,7 +6,7 @@ const int BOARD_SIZE = 4;
 const int TARGET = 2048;
 const int CELL_WIDTH = 26;
 const int CELL_HEIGHT = 13;
-bool DEBUG = false;
+bool DEBUG = true;
 
 // 全局映射表定义
 std::map<int, int> _2PowerMap = {
@@ -754,7 +754,7 @@ void Game2048::initBoard() {
                 board[i][j] = _2PowerMap[i * BOARD_SIZE + j_ + 1];
             }
         }
-        board[0][0] = 4;
+        //board[0][0] = 4;
     }
     addRandomTile();
     addRandomTile();
@@ -888,9 +888,9 @@ string Game2048::getColor(int num) {
     if (num == 1024) return "\033[48;5;172m\033[38;5;255m";
     if (num == 2048) return "\033[48;5;166m\033[38;5;255m";
     if (num == 4096) return "\033[48;5;93m\033[38;5;255m";
-    if (num == 8192) return "\033[48;5;57m\033[38;5;255m";
+    if (num == 8192) return "\033[48;5;90m\033[38;5;255m";
     if (num == 16384) return "\033[48;5;21m\033[38;5;255m";
-    if (num == 32768) return "\033[48;5;27m\033[38;5;255m";
+    if (num == 32768) return "\033[48;5;236m\033[38;5;255m";
     if (num == 65536) return "\033[48;5;233m\033[38;5;255m";
     return "\033[48;5;0m\033[38;5;255m";
 }
@@ -1289,10 +1289,6 @@ void Game2048::buildFrameBuffer() {
     }
     if (lineIdx < termHeight) frameBuffer[lineIdx++] = drawDownLargeHorizontalLine();
 
-    // 绘制获胜提示
-    if (hasWon() && lineIdx < termHeight) {
-        frameBuffer[lineIdx++] = "\n✨🎉✨ " + getString("congrats_2048") + " ✨🎉✨";
-    }
 
     // 显示强制生成提示
     if (!spawnHint.empty() && lineIdx < termHeight) {
